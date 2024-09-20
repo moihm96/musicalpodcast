@@ -1,5 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import useViewModel from "./PodcastListViewModel";
+import { PodcastTextInfo } from "./PodcastTextInfo";
+import { PodcastFilter } from "./PodcastFilter";
 
 export default function PodcastListView() {
   const { podcasts, getPodcasts } = useViewModel();
@@ -34,18 +36,11 @@ export default function PodcastListView() {
 
   return (
     <div className="w-full grid">
-      <div className="justify-self-end flex flex-row justify-center items-center">
-        <div className=" rounded-lg max-h-6 min-w-5 p-1 text-center bg-blue-500 text-white flex justify-center items-center">
-          {podcasts.length}
-        </div>
-        <input
-          type="text"
-          className="m-2 p-2 min-w-80  border-2 border-gray-200"
-          value={searchItem}
-          onChange={handleInputChange}
-          placeholder="Filter podcasts..."
-        />
-      </div>
+      <PodcastFilter
+        numberOfPodcasts={podcasts.length}
+        value={searchItem}
+        onChange={handleInputChange}
+      />
 
       <div className="w-full grid grid-cols-4 place-items-center">
         {filteredPodcasts.map((podcast) => (
@@ -57,15 +52,11 @@ export default function PodcastListView() {
               className=" w-20 h-20 rounded-full"
               src={podcast.image[2].label}
               alt={podcast.name}
-            ></img>
-            <div className="flex flex-col items-center gap-4">
-              <h4 className=" font-semibold text-center text-sm uppercase">
-                {podcast.name}
-              </h4>
-              <h6 className="text-xs text-gray-500 text-center">
-                Author: {podcast.artist?.label}
-              </h6>
-            </div>
+            />
+            <PodcastTextInfo
+              name={podcast.name}
+              author={podcast.artist?.label}
+            />
           </div>
         ))}
       </div>
