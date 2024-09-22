@@ -8,16 +8,16 @@ interface filterProps {
 export const PodcastFilter = (props: filterProps) => {
   const { numberOfPodcasts, value, onChange } = props;
   return (
-    <div className="justify-self-end flex flex-row justify-center items-center">
-      <div className=" rounded-lg max-h-6 min-w-5 p-1 text-center bg-blue-500 text-white flex justify-center items-center">
+    <div className="flex flex-row justify-end items-center pr-4">
+      <span className="bg-blue-600 rounded text-white w-8 text-center text-sm mr-2">
         {numberOfPodcasts}
-      </div>
+      </span>
       <input
         type="text"
-        className="m-2 p-2 min-w-80  border-2 border-gray-200"
+        className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 focus:outline-none focus:border-sky-500 rounded-md sm:text-sm focus:ring-1"
         value={value}
         onChange={onChange}
-        placeholder="Filter podcasts..."
+        placeholder="Filter podcast..."
       />
     </div>
   );

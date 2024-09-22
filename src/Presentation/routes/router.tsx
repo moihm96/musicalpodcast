@@ -8,6 +8,7 @@ export default function Router() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<PodcastListView />} />
+          <Route path="/:podcastid" element={<PodcastListView />} />
         </Route>
       </Routes>
     </BrowserRouter>

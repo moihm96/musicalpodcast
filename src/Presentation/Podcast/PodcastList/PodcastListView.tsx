@@ -4,7 +4,7 @@ import { PodcastTextInfo } from "./PodcastTextInfo";
 import { PodcastFilter } from "./PodcastFilter";
 
 export default function PodcastListView() {
-  const { podcasts, getPodcasts } = useViewModel();
+  const { podcasts, getPodcasts, getPodcast, podcastDetail } = useViewModel();
   const [searchItem, setSearchItem] = useState("");
   const [filteredPodcasts, setFilteredPodcasts] = useState(podcasts);
 
@@ -34,10 +34,16 @@ export default function PodcastListView() {
     setFilteredPodcasts(podcasts);
   }, [podcasts]);
 
+  useEffect(() => {
+    podcasts[0] && getPodcast(podcasts[0].id.id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [podcasts[0]]);
+
   return (
     <div className="w-full grid">
       <PodcastFilter
-        numberOfPodcasts={podcasts.length}
+        numberOfPodcasts={filteredPodcasts.length}
         value={searchItem}
         onChange={handleInputChange}
       />
