@@ -1,6 +1,7 @@
-import { PodcastRepository } from "@/Domain/Repository/PodcastRepository";
+import { Podcast } from "src/Domain/Model/Podcast";
+import { PodcastRepository } from "src/Domain/Repository/PodcastRepository";
 import PodcastDataSource from "../DataSource/PodcastDataSource";
-import { Podcast } from "@/Domain/Model/Podcast";
+
 export class PodcastRepositoryImpl implements PodcastRepository {
   dataSource: PodcastDataSource;
 

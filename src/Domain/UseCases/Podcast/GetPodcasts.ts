@@ -1,5 +1,5 @@
-import { Podcast } from "@/Domain/Model/Podcast";
-import { PodcastRepository } from "@/Domain/Repository/PodcastRepository";
+import { Podcast } from "src/Domain/Model/Podcast";
+import { PodcastRepository } from "src/Domain/Repository/PodcastRepository";
 
 export interface GetPodcastUseCase {
   invoke: () => Promise<Podcast[]>;

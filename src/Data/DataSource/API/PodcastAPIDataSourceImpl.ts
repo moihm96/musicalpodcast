@@ -1,4 +1,4 @@
-import { Podcast } from "@/Domain/Model/Podcast";
+import { Podcast } from "src/Domain/Model/Podcast";
 import PodcastDataSource from "../PodcastDataSource";
 import { PodcastResponse } from "./Entity/PodcastAPIEntity";
 
