@@ -1,37 +1,58 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useViewModel from "../PodcastList/PodcastListViewModel";
+import { Podcast } from "src/Domain/Model/Podcast";
+
 interface AsideProps {
   podcastId: string | undefined;
-  title: string;
-  author: string;
-  description: string;
-  image: string;
 }
 export const AsideInfo = (props: AsideProps) => {
-  const { podcastId, image, author, title, description } = props;
+  const { podcasts, getPodcasts } = useViewModel();
+  const [podcastSelected, setPodcastSelected] = useState<Podcast>();
+
+  useEffect(() => {
+    getPodcasts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const { podcastId } = props;
+
+  useEffect(() => {
+    const selectedPodcast = podcasts.filter((item) => item.id.id === podcastId);
+    setPodcastSelected(selectedPodcast[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [podcasts, podcastId]);
+
+  console.log(podcastId);
+
   return (
-    <aside className="basis-[20%] " key={podcastId}>
+    <aside className="basis-1/5 " key={podcastId}>
       <div className="border border-1 border-gray-300 shadow-md px-4 py-5 mb-5 rounded">
         <div className="flex flex-col items-center relative ">
           <Link to={`/podcast/${podcastId}`}>
-            <img
-              src={image}
-              width={200}
-              height={200}
-              alt=""
-              className="border border-1 rounded"
-            />
+            {podcastSelected && (
+              <img
+                src={podcastSelected?.image[2].label}
+                width={200}
+                height={200}
+                alt=""
+                className="border border-1 rounded"
+              />
+            )}
           </Link>
           <hr className="border-b-0 border-solid mt-5 mb-6 w-full " />
           <div className="flex items-left flex-col">
             <header>
-              <h2 className="font-bold">{title}</h2>
-              <small className="text-sm italic">by: {author}</small>
+              <h2 className="font-bold">
+                {podcastSelected && podcastSelected.name}
+              </h2>
+              <small className="text-sm italic">
+                by: {podcastSelected && podcastSelected.artist?.label}
+              </small>
             </header>
             <hr className="border-b-0 border-solid mt-4 mb-6 w-full " />
             <h3 className="font-bold h3 mb-1">Description:</h3>
             <p className="italic text-sm text-gray-600 break-all">
-              {description}
+              {podcastSelected && podcastSelected.summary}
             </p>
           </div>
         </div>

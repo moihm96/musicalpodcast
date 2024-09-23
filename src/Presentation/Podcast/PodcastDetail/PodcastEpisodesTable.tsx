@@ -4,13 +4,14 @@ import { useEffect } from "react";
 import { getDurationFormat } from "src/Core/utils/durationFormat";
 import { Link } from "react-router-dom";
 
-export const PodcastEpisodesView = ({ podcastId }: { podcastId: string }) => {
+export const PodcastEpisodesTable = ({ podcastId }: { podcastId: string }) => {
   const { getPodcast, podcastDetail } = useViewModel();
 
   useEffect(() => {
     podcastId && getPodcast(podcastId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const customLink = (podcastId: string, detailId: string | undefined) => {
     if (podcastId && detailId)
       return `/podcast/${podcastId}/episode/${detailId}`;
@@ -18,7 +19,7 @@ export const PodcastEpisodesView = ({ podcastId }: { podcastId: string }) => {
   };
 
   return (
-    <div className="basis-[70%]">
+    <div className="ml-4 basis-4/5">
       <div className="shadow-md p-2 mb-8 text-2xl font-bold border border-1 border-gray-300">
         <p>
           Episodes: <span>{podcastDetail && podcastDetail[0]?.episodes}</span>{" "}

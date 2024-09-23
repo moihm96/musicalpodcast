@@ -49,12 +49,6 @@ export default function PodcastListView() {
             className="h-52 w-11/12 m-4 flex flex-col gap-4 items-center shadow-lg"
             key={podcast.name}
             to={`/podcast/${podcast.id.id}`}
-            state={{
-              description: podcast.summary,
-              image: podcast.image[2].label,
-              author: podcast.artist?.label,
-              title: podcast.name,
-            }}
           >
             <img
               className=" w-20 h-20 rounded-full"
