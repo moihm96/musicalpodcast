@@ -1,5 +1,5 @@
 import { Outlet, useParams } from "react-router-dom";
-import { AsideInfo } from "../Podcast/PodcastDetail/AsideInfo";
+import { AsideInfo } from "../components/AsideInfo";
 
 export const EpisodeLayout = () => {
   const params = useParams();

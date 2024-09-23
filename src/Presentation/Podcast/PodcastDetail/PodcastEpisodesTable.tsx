@@ -12,9 +12,16 @@ export const PodcastEpisodesTable = ({ podcastId }: { podcastId: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const isValidURL = (text: string) => {
+    const urlPattern = /http:|https:/i;
+    return urlPattern.test(text);
+  };
+
   const customLink = (podcastId: string, detailId: string | undefined) => {
     if (podcastId && detailId)
-      return `/podcast/${podcastId}/episode/${detailId}`;
+      return isValidURL(detailId)
+        ? detailId
+        : `/podcast/${podcastId}/episode/${detailId}`;
     return "/";
   };
 

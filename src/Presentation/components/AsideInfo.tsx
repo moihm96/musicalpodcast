@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useViewModel from "../PodcastList/PodcastListViewModel";
+import useViewModel from "../Podcast/PodcastList/PodcastListViewModel";
 import { Podcast } from "src/Domain/Model/Podcast";
 
 interface AsideProps {
@@ -21,8 +21,6 @@ export const AsideInfo = (props: AsideProps) => {
     setPodcastSelected(selectedPodcast[0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [podcasts, podcastId]);
-
-  console.log(podcastId);
 
   return (
     <aside className="basis-1/5 " key={podcastId}>
