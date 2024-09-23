@@ -38,29 +38,32 @@ export default function PodcastListView() {
   return (
     <div className="w-full grid">
       <PodcastFilter
-        numberOfPodcasts={filteredPodcasts.length}
+        numberOfPodcasts={
+          filteredPodcasts.length >= 0 ? filteredPodcasts.length : 0
+        }
         value={searchItem}
         onChange={handleInputChange}
       />
 
       <div className="w-full grid grid-cols-4 place-items-center">
-        {filteredPodcasts.map((podcast) => (
-          <Link
-            className="h-52 w-11/12 m-4 flex flex-col gap-4 items-center shadow-lg"
-            key={podcast.name}
-            to={`/podcast/${podcast.id.id}`}
-          >
-            <img
-              className=" w-20 h-20 rounded-full"
-              src={podcast.image[2].label}
-              alt={podcast.name}
-            />
-            <PodcastTextInfo
-              name={podcast.name}
-              author={podcast.artist?.label}
-            />
-          </Link>
-        ))}
+        {filteredPodcasts.length > 0 &&
+          filteredPodcasts.map((podcast) => (
+            <Link
+              className="h-52 w-11/12 m-4 flex flex-col gap-4 items-center shadow-lg"
+              key={podcast.name}
+              to={`/podcast/${podcast.id.id}`}
+            >
+              <img
+                className=" w-20 h-20 rounded-full"
+                src={podcast.image[2].label}
+                alt={podcast.name}
+              />
+              <PodcastTextInfo
+                name={podcast.name}
+                author={podcast.artist?.label}
+              />
+            </Link>
+          ))}
       </div>
     </div>
   );

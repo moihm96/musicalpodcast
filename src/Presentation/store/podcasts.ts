@@ -1,3 +1,7 @@
+import {
+  getLocalStorageExpiration,
+  setLocalStorageExpiration,
+} from "src/Core/utils/localStorageExpiration";
 import PodcastAPIDataSourceImpl from "src/Data/DataSource/API/PodcastAPIDataSourceImpl";
 import { PodcastRepositoryImpl } from "src/Data/Repository/PodcastRepositoryImpl";
 import { Podcast } from "src/Domain/Model/Podcast";
@@ -23,20 +27,36 @@ const getPodcastUseCase = new GetPodcasts(podcastRepositoryImpl);
 const getPodcastDetailUseCase = new GetPodcast(podcastRepositoryImpl);
 
 export const usePodcastsStore = create<State>((set) => {
+  const podcastsValue = getLocalStorageExpiration("podcasts");
+  const podcastsParser = podcastsValue !== null && JSON.parse(podcastsValue);
   return {
-    podcasts: [],
+    podcasts: podcastsParser ? JSON.parse(podcastsParser.value) : [],
     loading: false,
     fetchPodcasts: async () => {
       set({ loading: true });
-      const data = await getPodcastUseCase.invoke();
-      set({ podcasts: data });
+      if (podcastsValue !== null) {
+        set({ podcasts: JSON.parse(podcastsParser.value) });
+      } else {
+        const data = await getPodcastUseCase.invoke();
+        setLocalStorageExpiration("podcasts", JSON.stringify(data), 1);
+        set({ podcasts: data });
+      }
       set({ loading: false });
     },
     podcastDetails: [],
     fetchPodcast: async (id) => {
       set({ loading: true });
-      const data = await getPodcastDetailUseCase.invoke(id);
-      set({ podcastDetails: data });
+      const podcastsDetailValue = getLocalStorageExpiration(id);
+      const podcastsDetailParser =
+        podcastsDetailValue !== null && JSON.parse(podcastsDetailValue);
+
+      if (podcastsDetailValue !== null) {
+        set({ podcastDetails: JSON.parse(podcastsDetailParser.value) });
+      } else {
+        const data = await getPodcastDetailUseCase.invoke(id);
+        setLocalStorageExpiration(id, JSON.stringify(data), 1);
+        set({ podcastDetails: data });
+      }
       set({ loading: false });
     },
   };

@@ -7,13 +7,9 @@ interface AsideProps {
   podcastId: string | undefined;
 }
 export const AsideInfo = (props: AsideProps) => {
-  const { podcasts, fetchPodcasts } = usePodcastsStore();
+  const { podcasts } = usePodcastsStore();
   const [podcastSelected, setPodcastSelected] = useState<Podcast>();
 
-  useEffect(() => {
-    fetchPodcasts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const { podcastId } = props;
 
   useEffect(() => {
