@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
-import useViewModel from "../PodcastList/PodcastListViewModel";
 import { useEffect, useState } from "react";
 import { PodcastDetail } from "src/Domain/Model/PodcastDetail";
+import { usePodcastsStore } from "src/Presentation/store/podcasts";
 
 export const EpisodeDetailView = () => {
   const [episode, setEpisode] = useState<PodcastDetail>();
@@ -10,18 +10,20 @@ export const EpisodeDetailView = () => {
 
   const { podcastId, episodeId } = params;
 
-  const { getPodcast, podcastDetail } = useViewModel();
+  const { podcastDetails, fetchPodcast } = usePodcastsStore();
 
   useEffect(() => {
-    podcastId && getPodcast(podcastId);
+    podcastId && fetchPodcast(podcastId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const episodeDetail = podcastDetail.filter((item) => item.id === episodeId);
+    const episodeDetail = podcastDetails.filter(
+      (item) => item.id === episodeId
+    );
     episodeDetail && setEpisode(episodeDetail[0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [podcastDetail, episodeId]);
+  }, [podcastDetails, episodeId]);
 
   const hasHTML = episode?.description && /\n/i.test(episode?.description);
   let newDescription: string | undefined = "";

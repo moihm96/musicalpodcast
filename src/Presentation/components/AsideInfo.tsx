@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useViewModel from "../Podcast/PodcastList/PodcastListViewModel";
 import { Podcast } from "src/Domain/Model/Podcast";
+import { usePodcastsStore } from "../store/podcasts";
 
 interface AsideProps {
   podcastId: string | undefined;
 }
 export const AsideInfo = (props: AsideProps) => {
-  const { podcasts, getPodcasts } = useViewModel();
+  const { podcasts, fetchPodcasts } = usePodcastsStore();
   const [podcastSelected, setPodcastSelected] = useState<Podcast>();
 
   useEffect(() => {
-    getPodcasts();
+    fetchPodcasts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { podcastId } = props;

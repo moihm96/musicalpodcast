@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import useViewModel from "./PodcastListViewModel";
 import { PodcastTextInfo } from "./PodcastTextInfo";
 import { PodcastFilter } from "./PodcastFilter";
 import { Link } from "react-router-dom";
+import { usePodcastsStore } from "src/Presentation/store/podcasts";
 
 export default function PodcastListView() {
-  const { podcasts, getPodcasts } = useViewModel();
+  const { podcasts, fetchPodcasts } = usePodcastsStore();
   const [searchItem, setSearchItem] = useState("");
   const [filteredPodcasts, setFilteredPodcasts] = useState(podcasts);
 
@@ -27,7 +27,7 @@ export default function PodcastListView() {
   };
 
   useEffect(() => {
-    getPodcasts();
+    fetchPodcasts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

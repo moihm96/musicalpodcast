@@ -1,14 +1,14 @@
 import { getDateFormatter } from "src/Core/utils/dateFormat";
-import useViewModel from "../PodcastList/PodcastListViewModel";
 import { useEffect } from "react";
 import { getDurationFormat } from "src/Core/utils/durationFormat";
 import { Link } from "react-router-dom";
+import { usePodcastsStore } from "src/Presentation/store/podcasts";
 
 export const PodcastEpisodesTable = ({ podcastId }: { podcastId: string }) => {
-  const { getPodcast, podcastDetail } = useViewModel();
+  const { fetchPodcast, podcastDetails } = usePodcastsStore();
 
   useEffect(() => {
-    podcastId && getPodcast(podcastId);
+    podcastId && fetchPodcast(podcastId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -29,7 +29,7 @@ export const PodcastEpisodesTable = ({ podcastId }: { podcastId: string }) => {
     <div className="ml-4 basis-4/5">
       <div className="shadow-md p-2 mb-8 text-2xl font-bold border border-1 border-gray-300">
         <p>
-          Episodes: <span>{podcastDetail && podcastDetail[0]?.episodes}</span>{" "}
+          Episodes: <span>{podcastDetails && podcastDetails[0]?.episodes}</span>{" "}
         </p>
       </div>
       <div className=" text-sm text-left text-gray-500 border border-1 border-gray-300  py-4 px-5">
@@ -49,8 +49,8 @@ export const PodcastEpisodesTable = ({ podcastId }: { podcastId: string }) => {
           </thead>
 
           <tbody>
-            {podcastDetail &&
-              podcastDetail
+            {podcastDetails &&
+              podcastDetails
                 .filter((item) => item.type !== "track")
                 .map((detail, index) => (
                   <tr

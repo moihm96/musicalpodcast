@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import useLoadingBounce from "src/Core/hooks/useLoadingBounce";
+import { usePodcastsStore } from "../store/podcasts";
 
 export const Header = () => {
-  const { loading } = useLoadingBounce();
+  const { loading } = usePodcastsStore();
+
   return (
     <header className="border-b border-gray-300 p-4 mb-5 flex justify-between">
       <h1>
