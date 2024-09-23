@@ -3,9 +3,9 @@ export interface PodcastDetail {
   author?: string;
   episodes?: number;
   image: string;
-  release: Date;
+  release: string;
   title: string;
-  duration?: number;
+  duration?: string;
   description?: string;
   id?: string;
   mediaType?: string;

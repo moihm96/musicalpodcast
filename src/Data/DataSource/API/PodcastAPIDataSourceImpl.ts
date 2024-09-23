@@ -16,8 +16,6 @@ function myFetch<T>(...args: any): Promise<TypedResponse<T>> {
 
 export default class PodcastAPIDataSourceImpl implements PodcastDataSource {
   async getPodcast(podcastId: string): Promise<PodcastDetail[]> {
-    console.log("PodcastId: ", podcastId);
-
     const params = new URLSearchParams({
       id: podcastId,
       media: "podcast",
@@ -29,8 +27,6 @@ export default class PodcastAPIDataSourceImpl implements PodcastDataSource {
     );
 
     const data: PodcastDetailAPIEntity = await response.json();
-
-    console.log("Data: ", data);
 
     const postcastDetail = data.results.map((detail) => {
       if (detail.wrapperType === "track") {
@@ -62,7 +58,7 @@ export default class PodcastAPIDataSourceImpl implements PodcastDataSource {
   }
   async getPodcasts(): Promise<Podcast[]> {
     let response = await myFetch<PodcastResponse>(
-      `${BASE_URL}/us/rss/toppodcasts/limit=100/json`
+      `${BASE_URL}/us/rss/toppodcasts/limit=100/genre=1310/json`
     );
     let data = await response.json();
 

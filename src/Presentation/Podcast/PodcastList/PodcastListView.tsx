@@ -2,9 +2,10 @@ import { ChangeEvent, useEffect, useState } from "react";
 import useViewModel from "./PodcastListViewModel";
 import { PodcastTextInfo } from "./PodcastTextInfo";
 import { PodcastFilter } from "./PodcastFilter";
+import { Link } from "react-router-dom";
 
 export default function PodcastListView() {
-  const { podcasts, getPodcasts, getPodcast, podcastDetail } = useViewModel();
+  const { podcasts, getPodcasts } = useViewModel();
   const [searchItem, setSearchItem] = useState("");
   const [filteredPodcasts, setFilteredPodcasts] = useState(podcasts);
 
@@ -34,12 +35,6 @@ export default function PodcastListView() {
     setFilteredPodcasts(podcasts);
   }, [podcasts]);
 
-  useEffect(() => {
-    podcasts[0] && getPodcast(podcasts[0].id.id);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [podcasts[0]]);
-
   return (
     <div className="w-full grid">
       <PodcastFilter
@@ -50,9 +45,16 @@ export default function PodcastListView() {
 
       <div className="w-full grid grid-cols-4 place-items-center">
         {filteredPodcasts.map((podcast) => (
-          <div
+          <Link
             className="h-52 w-11/12 m-4 flex flex-col gap-4 items-center shadow-lg"
             key={podcast.name}
+            to={`/podcast/${podcast.id.id}`}
+            state={{
+              description: podcast.summary,
+              image: podcast.image[2].label,
+              author: podcast.artist?.label,
+              title: podcast.name,
+            }}
           >
             <img
               className=" w-20 h-20 rounded-full"
@@ -63,7 +65,7 @@ export default function PodcastListView() {
               name={podcast.name}
               author={podcast.artist?.label}
             />
-          </div>
+          </Link>
         ))}
       </div>
     </div>
