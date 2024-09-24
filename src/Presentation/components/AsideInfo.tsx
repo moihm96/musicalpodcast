@@ -28,7 +28,7 @@ export const AsideInfo = (props: AsideProps) => {
                 src={podcastSelected?.image[2].label}
                 width={200}
                 height={200}
-                alt=""
+                alt={podcastSelected?.name}
                 className="border border-1 rounded"
               />
             )}
